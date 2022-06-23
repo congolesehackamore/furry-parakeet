@@ -5,13 +5,16 @@
     <body>
         <div class="wrapper">
             <div class="title-container">
-                <div class="title">
-                    <h1>Hello!</h1>
+                <div class="the-title-container">
+                    <div class="title">
+                        <h1>Hello!</h1>
+                    </div>
+                    <div class="subtitle">
+                        <h2>Ready to Tic-Tac-Toe?</h2>
+                    </div>
+                    <div class="restart-btn">Start a New Game</div>
                 </div>
-                <div class="subtitle">
-                    <h2>Ready to Tic-Tac-Toe?</h2>
-                </div>
-                <div class="restart-btn">Start a New Game</div>
+                <div class="github">@congolesehackamore</div>
             </div>
             <div class="game-container">
                 <div class="game">
@@ -34,16 +37,6 @@
             </div>
         </div>
         <!---->
-        <script type="module">
-import GameView from "./GameView"
-import Game from "./Game"
-
-const game = Game()
-const gameView = GameView()
-
-document.querySelector(".restart-btn").addEventListener("mouseup", function() {
-    console.log("mouseup on button")
-})
-        </script>
+        <script src="main.js" type="module"></script>
     </body>
 </html>
