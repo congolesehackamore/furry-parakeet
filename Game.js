@@ -1,65 +1,61 @@
+import Cell from "./Cell.js"
+
 export default class Game {
     constructor() {
-        console.log("Start Game")
+        this.reset()
+    }
+
+    reset() {
         this.turn = "X"
         this.index = 0
-        this.board = new Array(9).fill(null)
-        console.log(this.board)
+        this.gameState = 0
+        this.board = new Array(9).fill(0).map(x => new Cell())
     }
 
-    nextTurn() {
-        this.index++
-
-        if (this.turn === "X")
-            this.turn = "O"
-        else
-            this.turn = "X"
-    }
-
-    makeMove(index) {
-        if (this.board[index])
+    playAt(tileIndex) {
+        if (!this.board[tileIndex].isEmpty()) {
             return
-        if (this.endOfGame())
+        } else if (this.gameState === 1) {
             return
+        }
+        
+        this.board[tileIndex].setValue(this.turn);
+        this.index++;
 
-        this.board[index] = this.turn
-
-        const winningCombo = this.findWinningCombos()
-        console.log("Do We Have A Winner? " + winningCombo)
-
-        if (!winningCombo) {
-            this.nextTurn()
+        if (this.index > 4 && this.isWin()) {
+            this.gameState = 1
+        } else if (this.turn === "X") {
+            this.turn = "O";
+        } else {
+            this.turn = "X";
         }
     }
 
-    findWinningCombos() {
-        const combos = [
+    isWin() {
+        const winsPosition = [
             [0,1,2],
             [3,4,5],
             [6,7,8],
-            /**/
             [0,3,6],
             [1,4,7],
             [2,5,8],
-            /**/
             [0,4,8],
             [2,4,6]
         ]
 
-        for (const combo of combos) {
-            let winning = true
+        let theResult = false
 
-            for (const index of combo)
-                winning = winning && this.board[index] === this.turn
+        for (let i = 0; i < winsPosition.length && !theResult; i++) {
+            theResult = true
+            for (let j = 0; j < winsPosition[i].length && theResult; j++) {
+                theResult = theResult && this.board[winsPosition[i][j]].getValue() === this.turn
+            }
 
-            if (winning)
-                return combo
+            if (theResult) {
+                return winsPosition[i]
+            }
         }
 
-        return null
-    }
-
-    endOfGame() {
-        return !!this.findWinningCombos()
+        return false
     }
 }

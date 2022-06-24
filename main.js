@@ -1,9 +1,25 @@
-import GameView from "./GameView"
-import Game from "./Game"
+import GameView from "./GameView.js"
+import Game from "./Game.js"
 
-const game = Game()
-const gameView = GameView()
+const game = new Game()
+const gameView = new GameView()
+
+const onRestartClick = function() {
+    game.reset()
+    gameView.update(game)
+}
+
+const onTileClick = function(tileIndex) {
+    game.playAt(tileIndex)
+    gameView.update(game)
+}
 
 document.querySelector(".restart-btn").addEventListener("mouseup", function() {
-    console.log("mouseup on button")
+    onRestartClick()
+})
+
+document.querySelectorAll(".tile").forEach(function(tile) {
+    tile.addEventListener("mouseup", function() {
+        onTileClick(tile.dataset.index)
+    })
 })
