@@ -15,7 +15,6 @@ body {
 .wrapper {
     display: flex;
     align-items: center;
-    max-width: 1500px;
     max-height: 900px;
     margin: auto;
 }
@@ -140,21 +139,46 @@ body {
 
 
 @media only screen and (max-width: 600px) {
-
+    .wrapper {
+        flex-direction: column;
+    }
 }
 
 @media only screen and (min-width: 600px) {
-
+    .wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+    .title-container {
+        width: 100%;
+    }
+    .game-container {
+        width: 100%;
+    }
 }
 
 @media only screen and (min-width: 768px) {
-
+    .wrapper {
+        flex-direction: column;
+        width: unset;
+    }
 }
 
 @media only screen and (min-width: 992px) {
-
+    .wrapper {
+        flex-direction: row;
+    }
+    .title-container {
+        width: 40vw;
+    }
+    .game-container {
+        width: 60vw;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
-
+    .wrapper {
+        flex-direction: row;
+        max-width: 1500px;
+    }
 }
