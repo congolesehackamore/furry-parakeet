@@ -4,9 +4,9 @@ export default class GameView {
     }
 
     update(game) {
-        this.updateTurn(game)
-
-        const combo = game.isWin()
+        const combo = game.isWin(game.turn)
+        
+        this.updateTurn(game, !!combo)
 
         for (let i = 0; i < 9; i++) {
             const tile = document.querySelector(".tile[data-index='" + i + "']")
@@ -30,9 +30,9 @@ export default class GameView {
         }
     }
 
-    updateTurn(game) {
-        let playerX = document.querySelector(".player-x")
-        let playerO = document.querySelector(".player-o")
+    updateTurn(game, turnWin) {
+        let playerX = document.querySelector(".header .player-x")
+        let playerO = document.querySelector(".header .player-o")
         let players = [playerX, playerO]
 
         players.forEach(player => player.classList.remove("active"))
@@ -42,5 +42,28 @@ export default class GameView {
         } else {
             playerO.classList.toggle("active")
         }
+
+        let aboutPlayerX = "Player X"
+        if (turnWin && game.turn === "X") {
+            aboutPlayerX = "🏆 " + aboutPlayerX
+        }
+        if (game.players[0] === "computer") {
+            aboutPlayerX = aboutPlayerX + " 🖥️"
+        } else if (game.players[0] === "human") {
+            aboutPlayerX = aboutPlayerX + " 🧑"
+        }
+
+        let aboutPlayerO = "Player O"
+        if (turnWin && game.turn === "O") {
+            aboutPlayerO = "🏆 " + aboutPlayerO
+        }
+        if (game.players[1] === "computer") {
+            aboutPlayerO = aboutPlayerO + " 🖥️"
+        } else if (game.players[1] === "human") {
+            aboutPlayerO = aboutPlayerO + " 🧑"
+        }
+
+        document.querySelector(".header .player-o span").innerHTML = aboutPlayerO
+        document.querySelector(".header .player-x span").innerHTML = aboutPlayerX
     }
 }

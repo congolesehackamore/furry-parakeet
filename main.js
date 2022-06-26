@@ -10,11 +10,11 @@ const onRestartClick = function() {
 }
 
 const onTileClick = function(tileIndex) {
-    game.playAt(tileIndex)
+    game.playAt(tileIndex, false)
     gameView.update(game)
 }
 
-document.querySelector(".restart-btn").addEventListener("mouseup", function() {
+document.querySelector("#restart.active").addEventListener("mouseup", function() {
     onRestartClick()
 })
 
@@ -52,4 +52,32 @@ document.addEventListener("keyup", function(event) {
             onRestartClick();
             break;
     }
+})
+
+document.querySelector("#computer-vs-computer.active")?.addEventListener("mouseup", function() {
+    console.log("🖥️ vs 🖥️")
+    game.reset()
+    game.setPlayers("computer", "computer")
+    gameView.update(game)
+})
+
+document.querySelector("#computer-vs-player.active")?.addEventListener("mouseup", function() {
+    console.log("🖥️ vs 🧑")
+    game.reset()
+    game.setPlayers("computer", "human")
+    gameView.update(game)
+})
+
+document.querySelector("#player-vs-computer.active")?.addEventListener("mouseup", function() {
+    console.log("🧑 vs 🖥️")
+    game.reset()
+    game.setPlayers("human", "computer")
+    gameView.update(game)
+})
+
+document.querySelector("#player-vs-player.active")?.addEventListener("mouseup", function() {
+    console.log("🧑 vs 🧑")
+    game.reset()
+    game.setPlayers("human", "human")
+    gameView.update(game)
 })

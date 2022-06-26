@@ -1,4 +1,5 @@
 import Cell from "./Cell.js"
+import Intelligence from "./Intelligence.js"
 
 export default class Game {
     constructor() {
@@ -10,11 +11,14 @@ export default class Game {
         this.turns = 0
         this.gameState = 0
         this.cellIndex = 9;
+        this.players = ["human", "human"]
         this.board = new Array(9).fill(0).map(x => new Cell())
     }
 
-    playAt(tileIndex) {
-        if (!this.board[tileIndex].isEmpty()) {
+    playAt(tileIndex, isComputer) {
+        if (!isComputer && this.isComputerTurn()) {
+            return
+        } else if (!this.board[tileIndex].isEmpty()) {
             return
         } else if (this.gameState === 1) {
             return
@@ -23,16 +27,35 @@ export default class Game {
         this.board[tileIndex].setValue(this.turn);
         this.turns++;
 
-        if (this.turns > 4 && this.isWin()) {
+        if (this.turns > 4 && this.isWin(this.turn)) {
             this.gameState = 1
-        } else if (this.turn === "X") {
+        } else {
+            this.switchTurn()
+        }
+    }
+
+    isComputerTurn() {
+        if (this.turn === "O" && this.players[1] === "computer") { return true }
+        if (this.turn === "X" && this.players[0] === "computer") { return true }
+
+        return false
+    }
+
+    switchTurn() {
+        if (this.turn === "X") {
             this.turn = "O";
         } else {
             this.turn = "X";
         }
+
+        if (this.turn === "O" && this.players[1] === "computer") {
+            this.playAt(new Intelligence().makeTurn(this.board, "O", "X"), true)
+        } else if (this.turn === "X" && this.players[0] === "computer") {
+            this.playAt(new Intelligence().makeTurn(this.board, "X", "O"), true)
+        }
     }
 
-    isWin() {
+    isWin(winningPlayer) {
         const winsPosition = [
             [0,1,2],
             [3,4,5],
@@ -49,7 +72,7 @@ export default class Game {
         for (let i = 0; i < winsPosition.length && !theResult; i++) {
             theResult = true
             for (let j = 0; j < winsPosition[i].length && theResult; j++) {
-                theResult = theResult && this.board[winsPosition[i][j]].getValue() === this.turn
+                theResult = theResult && this.board[winsPosition[i][j]].getValue() === winningPlayer
             }
 
             if (theResult) {
@@ -86,6 +109,15 @@ export default class Game {
             else {
                 this.cellIndex = this.cellIndex - 1
             }
+        }
+    }
+
+    setPlayers(playerX, playerO) {
+        this.players[0] = playerX
+        this.players[1] = playerO
+
+        if (playerX === "computer") {
+            this.playAt(new Intelligence().makeTurn(this.board, "X", "O"), true)
         }
     }
 }

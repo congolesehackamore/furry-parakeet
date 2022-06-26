@@ -45,18 +45,28 @@ body {
     font-weight: 400;
 }
 
-.restart-btn {
-    border: 2px solid #3380FF;
-    display: flex;
-    justify-content: center;
-    width: 155px;
-    border-radius: 10px;
+.banner {
     margin-top: 10px;
+}
+
+.banner .button {
+    border: 2px solid #3380FF;
+    display: inline-block;
+    border-radius: 10px;
     padding: 10px;
+    margin: 2px;
+}
+
+.banner .button.active {
     cursor: pointer;
 }
 
-.restart-btn:hover {
+.banner .button.disabled {
+    cursor: not-allowed;
+    opacity: 60%;
+}
+
+.banner .button.active:hover {
     transition: all 0.5s ease;
     background-color: #3380FF;
     color: #f2fceb;
