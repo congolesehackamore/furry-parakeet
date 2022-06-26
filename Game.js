@@ -7,8 +7,9 @@ export default class Game {
 
     reset() {
         this.turn = "X"
-        this.index = 0
+        this.turns = 0
         this.gameState = 0
+        this.cellIndex = 9;
         this.board = new Array(9).fill(0).map(x => new Cell())
     }
 
@@ -20,9 +21,9 @@ export default class Game {
         }
         
         this.board[tileIndex].setValue(this.turn);
-        this.index++;
+        this.turns++;
 
-        if (this.index > 4 && this.isWin()) {
+        if (this.turns > 4 && this.isWin()) {
             this.gameState = 1
         } else if (this.turn === "X") {
             this.turn = "O";
@@ -57,5 +58,34 @@ export default class Game {
         }
 
         return false
+    }
+
+    moveAt(type) {
+        if (type === "up") {
+            if (this.cellIndex === 9) { return }
+            else if ((this.cellIndex - this.cellIndex % 3) / 3 === 0) { return }
+            else {
+                this.cellIndex = this.cellIndex - 3
+            }
+        } else if (type === "down") {
+            if (this.cellIndex === 9) { this.cellIndex = 0 }
+            else if ((this.cellIndex - this.cellIndex % 3) / 3 === 2) { return }
+            else {
+                this.cellIndex = this.cellIndex + 3
+            }
+        } else if (type === "right") {
+            if (this.cellIndex === 9) { this.cellIndex = 0 }
+            else if (this.cellIndex % 3 === 2) { return }
+            else {
+                this.cellIndex = this.cellIndex + 1
+            }
+
+        } else if (type === "left") {
+            if (this.cellIndex === 9) { return }
+            else if (this.cellIndex % 3 === 0) { return }
+            else {
+                this.cellIndex = this.cellIndex - 1
+            }
+        }
     }
 }

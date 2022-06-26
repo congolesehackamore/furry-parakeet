@@ -23,3 +23,33 @@ document.querySelectorAll(".tile").forEach(function(tile) {
         onTileClick(tile.dataset.index)
     })
 })
+
+document.addEventListener("keyup", function(event) {
+    switch (event.code) {
+        case "ArrowDown":
+            game.moveAt("down")
+            gameView.update(game)
+            break
+        case "ArrowUp":
+            game.moveAt("up")
+            gameView.update(game)
+            break
+        case "ArrowRight":
+            game.moveAt("right")
+            gameView.update(game)
+            break
+        case "ArrowLeft":
+            game.moveAt("left")
+            gameView.update(game)
+            break
+        case "Space":
+        case "Enter":
+            if (game.cellIndex === 9) { return }
+            game.playAt(game.cellIndex)
+            gameView.update(game)
+            break;
+        case "KeyR":
+            onRestartClick();
+            break;
+    }
+})

@@ -98,7 +98,7 @@ body {
     font-size: 100px;
 }
 
-.tile:hover {
+.tile:hover, .tile.selected {
     background-color: #e8e8e8;
 }
 

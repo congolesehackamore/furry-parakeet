@@ -12,6 +12,7 @@ export default class GameView {
             const tile = document.querySelector(".tile[data-index='" + i + "']")
 
             tile.classList.remove("winner")
+            tile.classList.remove("selected")
 
             if (game.board[i].value === "X") {
                 tile.innerHTML = "<span class=\"player-x\">X</span>"
@@ -23,6 +24,8 @@ export default class GameView {
 
             if (combo && combo.includes(i)) {
                 tile.classList.add("winner")
+            } else if(i === game.cellIndex) {
+                tile.classList.add("selected")
             }
         }
     }
